@@ -1,73 +1,75 @@
-# Welcome to your Lovable project
+# KV Portfolio - Responsive & Cross-Device Compatible
 
-## Project info
+This is a refactored version of the KV portfolio that renders correctly and consistently on ALL devices (mobile, tablet, laptop, desktop), regardless of screen size, GPU, or browser.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Key Improvements
 
-## How can I edit this code?
+### WebGL Safety & Fallbacks
+- **Feature Detection**: Uses capability and feature detection instead of device/screen-width detection
+- **Runtime WebGL Check**: Detects WebGL support at runtime and automatically falls back to static version if unavailable
+- **Error Boundaries**: Added error boundaries around all 3D components to prevent app crashes
+- **Performance Optimization**: Limits pixel ratio dynamically based on device capability
 
-There are several ways of editing your application.
+### Responsive Design
+- **Flexible Layouts**: Uses `min-h-dvh` instead of `min-h-screen` for better viewport height handling
+- **Responsive Typography**: Implemented responsive font sizes using Tailwind's responsive prefixes
+- **Adaptive UI**: Buttons and content stack properly on small screens
 
-**Use Lovable**
+### Progressive Enhancement
+- **Base Layer**: Clean, readable 2D site (HTML/CSS/React) that works without JavaScript
+- **Enhancement Layer**: 3D visuals and motion added only if supported
+- **Graceful Degradation**: Content remains accessible even without 3D features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Accessibility Features
+- **Prefers Reduced Motion**: Respects user's motion preferences
+- **Keyboard Navigation**: Maintains keyboard navigation and text readability
+- **Screen Reader Friendly**: Proper semantic HTML structure
 
-Changes made via Lovable will be committed automatically to this repo.
+### Error Handling
+- **No Blank Screens**: Ensures no blank screens under any failure scenario
+- **Graceful Recovery**: Handles WebGL context loss and restores when possible
+- **Fallback Content**: Always provides fallback content when 3D features fail
 
-**Use your preferred IDE**
+## Technical Implementation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### WebGLSafeWrapper Component
+- Wraps all 3D components with safety checks
+- Performs WebGL support detection
+- Handles context loss and restoration
+- Limits pixel ratio for performance
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Device Capability Detection
+- Checks for WebGL support
+- Detects low-end devices based on memory and hardware
+- Identifies touch devices
+- Respects user's reduced motion preferences
 
-Follow these steps:
+### Safe 3D Components
+- NetworkGraph component now works with the WebGLSafeWrapper
+- Proper error handling for all Three.js operations
+- Performance optimizations for various hardware capabilities
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## File Structure
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── components/
+│   ├── three/
+│   │   ├── WebGLSafeWrapper.tsx    # Safe WebGL wrapper with fallbacks
+│   │   ├── ErrorBoundary.tsx       # Error boundaries for 3D components
+│   │   ├── NetworkGraph.tsx        # Refactored 3D network graph
+│   │   └── MobileNetworkFallback.tsx # Fallback for unsupported devices
+├── contexts/
+│   └── MotionContext.tsx           # Enhanced context with device capabilities
+├── hooks/
+│   └── useDeviceCapabilities.ts    # Device capability detection hook
+├── pages/
+│   └── Index.tsx                   # Main page with safe 3D integration
+└── index.css                       # Responsive styles
 ```
 
-**Edit a file directly in GitHub**
+## Deployment Notes
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+This portfolio is optimized for deployment on Vercel and other platforms. The build process maintains all safety features and fallbacks.
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The portfolio will work on any device, from low-end mobile phones to high-end desktops, with appropriate fallbacks and performance optimizations for each device class.

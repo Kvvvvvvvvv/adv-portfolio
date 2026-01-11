@@ -11,22 +11,16 @@ import EducationSection from '@/components/sections/EducationSection';
 import ActivitiesSection from '@/components/sections/ActivitiesSection';
 import MotionToggle from '@/components/ui/MotionToggle';
 import MobileNetworkFallback from '@/components/three/MobileNetworkFallback';
+import WebGLSafeWrapper from '@/components/three/WebGLSafeWrapper';
+import ErrorBoundary from '@/components/three/ErrorBoundary';
 
 // Lazy load the 3D component for better performance
 const NetworkGraph = lazy(() => import('@/components/three/NetworkGraph'));
 
 const Index: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Check if mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
     // Track scroll progress
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -37,7 +31,6 @@ const Index: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('resize', checkMobile);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -50,16 +43,26 @@ const Index: React.FC = () => {
 
         {/* 3D Background - fixed position */}
         <div className="fixed inset-0 z-0">
-          {isMobile ? (
-            <MobileNetworkFallback />
-          ) : (
+          <ErrorBoundary>
             <Suspense fallback={<MobileNetworkFallback />}>
-              <NetworkGraph 
-                scrollProgress={scrollProgress} 
+              <WebGLSafeWrapper
+                fallback={<MobileNetworkFallback />}
+                canvasProps={{
+                  camera: { position: [0, 0, 12], fov: 60 },
+                  dpr: [1, 1.5],
+                  performance: { min: 0.5 },
+                  gl: { antialias: true, alpha: true }
+                }}
                 className="w-full h-full"
-              />
+              >
+                <React.Suspense fallback={null}>
+                  <NetworkGraph 
+                    scrollProgress={scrollProgress} 
+                  />
+                </React.Suspense>
+              </WebGLSafeWrapper>
             </Suspense>
-          )}
+          </ErrorBoundary>
           {/* Gradient overlay for readability */}
           <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/60 to-background pointer-events-none" />
         </div>

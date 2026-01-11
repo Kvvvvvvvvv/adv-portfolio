@@ -27,8 +27,13 @@ const MobileNetworkFallback: React.FC = () => {
         <line x1="25%" y1="25%" x2="33%" y2="50%" stroke="url(#line-gradient)" strokeWidth="1" />
       </svg>
 
-      {/* Grid */}
+      {/* Grid - responsive */}
       <div className="absolute inset-0 bg-grid opacity-20" />
+      
+      {/* Additional responsive elements */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      </div>
     </div>
   );
 };

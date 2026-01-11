@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, Trail } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber';
+import { Float } from '@react-three/drei';
 import * as THREE from 'three';
 import { useMotion } from '@/contexts/MotionContext';
 
@@ -271,7 +271,18 @@ const Scene: React.FC<{ scrollProgress: number }> = ({ scrollProgress }) => {
   );
 };
 
-// Exported component
+// Exported scene component
+interface NetworkGraphSceneProps {
+  scrollProgress: number;
+}
+
+export const NetworkGraphScene: React.FC<NetworkGraphSceneProps> = ({ scrollProgress }) => {
+  return (
+    <Scene scrollProgress={scrollProgress} />
+  );
+};
+
+// Legacy component for backward compatibility
 interface NetworkGraphProps {
   scrollProgress: number;
   className?: string;
@@ -280,13 +291,7 @@ interface NetworkGraphProps {
 const NetworkGraph: React.FC<NetworkGraphProps> = ({ scrollProgress, className }) => {
   return (
     <div className={className}>
-      <Canvas
-        camera={{ position: [0, 0, 12], fov: 60 }}
-        dpr={[1, 1.5]} // Limit pixel ratio for performance
-        performance={{ min: 0.5 }}
-      >
-        <Scene scrollProgress={scrollProgress} />
-      </Canvas>
+      <Scene scrollProgress={scrollProgress} />
     </div>
   );
 };

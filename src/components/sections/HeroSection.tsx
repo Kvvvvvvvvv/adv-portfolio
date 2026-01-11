@@ -54,77 +54,79 @@ const HeroSection: React.FC = () => {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center px-6 w-full"
+      className="relative min-h-dvh flex items-center justify-center px-6 w-full"
     >
-      {/* Content overlay */}
+      {/* Content overlay - adjusted for various screen sizes */}
       <div className="relative z-10 text-center max-w-6xl mx-auto px-4">
         {/* Status indicator */}
-        <div className="flex items-center justify-center gap-2 mb-8">
+        <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
           <span className="w-2 h-2 rounded-full bg-node-safe animate-pulse-slow" />
-          <span className="text-sm font-mono text-muted-foreground tracking-wider uppercase">
+          <span className="text-xs sm:text-sm font-mono text-muted-foreground tracking-wider uppercase">
             System Online
           </span>
         </div>
 
-        {/* Name */}
+        {/* Name - responsive sizing */}
         <h1 
           ref={titleRef}
-          className="text-6xl md:text-[4.5rem] lg:text-[5.5rem] xl:text-[6rem] font-bold tracking-tight mb-6 neon-text"
+          className="text-4xl sm:text-5xl md:text-[3.5rem] lg:text-[4.5rem] xl:text-[6rem] font-bold tracking-tight mb-4 sm:mb-6 neon-text"
           style={{ opacity: reduceMotion ? 1 : 0 }}
         >
           <span className="text-gradient-primary">Keerthivasan</span>
           <span className="text-foreground"> E</span>
         </h1>
 
-        {/* Subtitle */}
+        {/* Subtitle - responsive sizing */}
         <p 
           ref={subtitleRef}
-          className="text-xl md:text-2xl lg:text-[2rem] font-mono text-muted-foreground mb-8 tracking-wide"
+          className="text-lg sm:text-xl md:text-[1.5rem] lg:text-[2rem] font-mono text-muted-foreground mb-6 sm:mb-8 tracking-wide"
           style={{ opacity: reduceMotion ? 1 : 0 }}
         >
           <span className="text-primary">Cybersecurity</span>
-          <span className="mx-4 text-border">•</span>
-          <span className="text-node-secondary">AI</span>
-          <span className="mx-4 text-border">•</span>
-          <span className="text-accent">Blockchain Engineer</span>
+          <span className="mx-2 sm:mx-4 text-border hidden sm:inline">•</span>
+          <span className="block sm:inline sm:mx-0 mb-2 sm:mb-0">&</span>
+          <span className="text-node-secondary ml-0 sm:ml-4">AI</span>
+          <span className="mx-2 sm:mx-4 text-border hidden sm:inline">•</span>
+          <span className="block sm:inline sm:mx-0 mb-2 sm:mb-0">&</span>
+          <span className="text-accent ml-0 sm:ml-4">Blockchain Engineer</span>
         </p>
 
-        {/* Tagline */}
+        {/* Tagline - responsive sizing */}
         <p 
           ref={taglineRef}
-          className="text-xl md:text-2xl lg:text-[2rem] text-foreground/90 mb-16 font-light max-w-4xl mx-auto"
+          className="text-base sm:text-lg md:text-xl lg:text-[2rem] text-foreground/90 mb-8 sm:mb-12 font-light max-w-2xl sm:max-w-4xl mx-auto"
           style={{ opacity: reduceMotion ? 1 : 0 }}
         >
           Engineering secure, intelligent systems with expertise in cybersecurity, AI, and blockchain.
         </p>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons - stacked on small screens */}
         <div 
           ref={ctaRef}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
           style={{ opacity: reduceMotion ? 1 : 0 }}
         >
           <button 
             onClick={() => scrollToSection('projects')}
-            className="btn-primary-glow px-10 py-4 rounded-xl text-base font-medium tracking-wide pulse-on-hover"
+            className="btn-primary-glow px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-medium tracking-wide pulse-on-hover w-full sm:w-auto"
           >
             View Projects
           </button>
           <button 
             onClick={() => scrollToSection('contact')}
-            className="btn-outline-glow px-10 py-4 rounded-xl text-base font-medium tracking-wide pulse-on-hover"
+            className="btn-outline-glow px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-medium tracking-wide pulse-on-hover w-full sm:w-auto"
           >
             Get in Touch
           </button>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">
+      {/* Scroll indicator - adjusted for different screen sizes */}
+      <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2">
+        <span className="text-[0.6rem] sm:text-xs font-mono text-muted-foreground uppercase tracking-widest">
           Scroll
         </span>
-        <div className="w-px h-12 bg-gradient-to-b from-primary to-transparent" />
+        <div className="w-px h-8 sm:h-12 bg-gradient-to-b from-primary to-transparent" />
       </div>
 
       {/* Grid overlay */}
